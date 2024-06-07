@@ -1,0 +1,31 @@
+---
+title: ''
+output: pdf_document
+---
+  
+
+\begin{center}
+{\large    Statistical Computing\\
+   Activity 2 }
+\end{center}
+
+\subsubsection*{Write the R code to answer the following questions.}
+
+
+\begin{enumerate}
+\item Calculate the sum $\sum_{j=1}^n j^2$ and compare with $n(n+1)(2n+1)/6$, for $n=200,~400,~600,~800$.
+\item Using \texttt{rep()} and \texttt{seq()} as needed, create the vectors:
+\begin{center}0 0 0 0 0 1 1 1 1 1  2 2 2 2 2 3 3 3 3 3 4 4 4 4 4\end{center}
+\begin{center}1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5\end{center}
+\begin{center}1 2 3 4 5 2 3 4 5 6 3 4 5 6 7 4 5 6 7 8 5 6 7 8 9\end{center}
+\item Write the R code to calculate the standard sample variance formula
+$$s^2 = \frac{1}{n-1} \sum_{i=1}^n(x_i-\bar{x})^2 $$
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document} 

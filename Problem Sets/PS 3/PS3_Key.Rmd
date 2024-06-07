@@ -1,0 +1,299 @@
+---
+title: ""
+output: pdf_document
+header-includes:
+- \newcommand{\benum}{\begin{enumerate}}
+- \newcommand{\eenum}{\end{enumerate}}
+- \newcommand{\beit}{\begin{itemize}}
+- \newcommand{\eeit}{\end{itemize}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, results = 'asis')
+```
+
+
+\begin{center}
+{\Large{\textbf{Problem Set 3}}} \\
+\vspace{4 bp}
+Due February 27, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+
+\benum
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. 
+  \item Work on git. Fork the repository found at https://github.com/domlockett/PDS-PS3 and add your code, committing and pushing frequently. Use meaningful commit messages – these may affect your grade.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TAs or use their office hours.
+  \item For students new to programming, this may take a while. Get started.
+  \item You will need to install \texttt{ggplot2} and \texttt{dplyr} to complete this dataset.
+  
+\eenum
+
+\section*{\texttt{ggplot2}}
+
+\benum
+
+  \item Finish the exercise we started in class on 2/11/2020:
+
+- Alabama, Arkansas, California, Colorado, Maine, Massachusetts, Minnesota, North Carolina, Oklahoma, Tennessee, Texas, Utah, Vermont, and Virginia will all hold their primraries on March 3
+- You have been assigned to create a visulaization of the state of the race for this date.
+- You will make a plot to show this.
+- In addition to the kinds of issues discussed above
+    + Change to the minimial theme
+    + Figure out how to change the axis labels and legends beyond the defaults
+- Visit https://ggplot2.tidyverse.org/reference/ 
+
+ \item Finish the exercise we started in class on 2/13/2020:
+-Re-organize the dataset so that there is only one row for each candidate-state dyad
+-Feel free to limit this down to only the relevant candidates
+-Compare the size of this dataset to our original dataset using the object_size command.
+
+
+\eenum
+
+
+\section*{dplyr}
+\benum
+
+ \item Now you are going to combine two datasets in order to observe how many endorsements each candidate recieved using \textbf{only} \texttt{dplyr} functions.
+
+\beit
+ \item Create two new objects \texttt{polls} and \texttt{Endorsements}:
+ 
+```{r Q3.1, eval = T}
+library(fivethirtyeight)
+library(tidyverse)
+polls <- read_csv('https://jmontgomery.github.io/PDS/Datasets/president_primary_polls_feb2020.csv')
+Endorsements <- endorsements_2020
+```
+
+\item Change the \texttt{Endorsements} variable name \texttt{endorsee} to \texttt{candidate\_name}
+
+```{r Q3.2, eval = T}
+colnames(Endorsements)[colnames(Endorsements) == 'endorsee'] <- 'candidate_name'
+
+
+```
+
+\item Change the Endorsement dataframe into a \texttt{tibble} object.
+
+```{r Q3.3, eval = T}
+
+polls <- as_tibble(polls)
+Endorsements <- as_tibble(Endorsements)
+```
+
+\item Filter the \texttt{poll} variable to only include the following 6 candidates: Amy Klobuchar, Bernard Sanders,Elizabeth Warren, Joseph R. Biden Jr., Michael Bloomberg, Pete Buttigieg \textbf{and} subset the dataset to the following five variables: \texttt{candidate\_name, sample\_size, start\_date, party, pct}
+
+```{r Q3.4, eval = T}
+
+polls <- filter(polls, candidate_name %in% c("Amy Klobuchar","Bernard Sanders",
+"Elizabeth Warren","Joseph R. Biden Jr.","Michael Bloomberg","Pete Buttigieg")) %>%
+  select(candidate_name, sample_size, start_date, party, pct)
+  
+```
+
+\item Compare the candidate names in the two datasets and find instances where the a candidates name is spelled differently i.e. Bernard vs. Bernie. Using only \texttt{dplyr} functions, make these the same across datasets. 
+
+```{r Q3.5, eval = T}
+polls$candidate_name <-  recode(polls$candidate_name, "Joseph R. Biden Jr." 
+= "Joe Biden", "Bernard Sanders" = "Bernie Sanders")
+
+
+```
+
+\item Now combine the two datasets by candidate name using \texttt{dplyr} (there will only be five candidates after joining).
+
+```{r Q3.6, eval = T}
+
+
+polls<-polls %>%
+  inner_join(Endorsements, by= 'candidate_name')
+
+
+```
+
+\item Create a variable which indicates the number of endorsements for each of the five candidates using \texttt{dplyr}.
+
+```{r Q3.7, eval = T}
+polls <- polls %>% group_by(endorser, candidate_name) %>% mutate(count = n())
+
+
+```
+
+\item Plot the number of endorsement each of the 5 candidates have. Save your plot as an object \texttt{p}.
+
+```{r Q3.8, eval = T}
+
+p <-  ggplot(data = polls)+
+  geom_point(mapping =aes(
+    x = candidate_name, 
+    y = count)) + 
+      theme_bw()
+
+```
+
+
+\item Rerun the previous line as follows: \texttt{p + theme_dark()}. Notice how you can still customize your plot without rerunning the plot with new options.
+
+
+```{r Q3.9, eval = T}
+p +theme_dark()
+```
+
+\item Now, using the knowledge from the last step change the label of the X and Y axes to be more informative, add a title. save the plot in your forked repository.
+
+
+```{r Q3.10, eval = T}
+
+p + ggtitle('Endorsements and Poll Percentage by Candidate') +
+labs(y="# of Endorsements", 
+x= "Candidate")
+```
+
+
+\eeit
+\item For this question you will be analyzing Tweets from President Trump for various characteristics. Load in the following packages and data:
+
+```{r Q4 setup, eval= T}
+library(tidyverse)
+#install.packages('tm')
+library(tm) 
+#install.packages('lubridate')
+library(lubridate)
+#install.packages('wordcloud')
+library(wordcloud)
+tweets <- read_csv('https://politicaldatascience.com/PDS/Datasets/trump_tweets.csv')
+```
+
+\beit
+\item First separate the \texttt{created\_at} variable into two new variables where the date and the time are in separate columns. \textbf{Then} report the range of dates that is in this dataset.
+
+```{r Q4.1}
+tweets$created_at <- mdy_hm(tweets$created_at)
+tweets <- separate(data = tweets, col = created_at, into  = c('Date', 'Time'), sep = ' ')
+
+```
+
+\item Using \texttt{dplyr} subset the data to only include original tweets (remove retweents) and show the text of the President's \textbf{top 5} most popular and most retweeted tweets. (Hint: The \texttt{match} function can help you find the index once you identify the largest values.) 
+
+
+```{r Q4.2}
+tweets <- tweets %>%
+  filter(is_retweet==F)
+tweets$text[match(sort(tweets$favorite_count, decreasing=TRUE)[1:5],tweets$favorite_count)]
+
+tweets$text[match(sort(tweets$retweet_count, decreasing=TRUE)[1:5],tweets$retweet_count)]
+```
+
+
+
+\item Create a \textit{corpus} of the tweet content and put this into the object \texttt{Corpus} using the \texttt{tm} (text mining) package. (Hint: Do the assigned readings.)
+
+```{r Q4.3}
+library(tm)
+Corpus <- with(tweets, VCorpus(VectorSource(text))) 
+
+```
+
+\item Remove extraneous whitespace, remove numbers and punctuation, convert everything to lower case and a 'stop words' that have little substantive meaning (the, a, it).
+
+```{r Q4.4}
+
+Corpus <- Corpus %>% 
+  tm_map(stripWhitespace) %>% 
+  tm_map(removeNumbers) %>% 
+  tm_map(removePunctuation) %>% 
+  tm_map(content_transformer(tolower)) %>% 
+  tm_map(removeWords, c(stopwords("english"),"see", "people",'new','want','one','even','must','need','done','back','just','going', 'know', 'can','said','like','many','like','realdonaldtrump'))
+
+```
+
+
+\item Now create a \texttt{wordcloud} to visualize the top 50 words the President uses in his tweets. Use only words that occur at least three times. Display the plot with words in random order and use 50 random colors. Save the plot into your forked repository.
+
+```{r Q4.5, warning =F}
+
+wordcloud(Corpus, max.words = 50, colors = topo.colors(n = 50),
+random.color = TRUE, random.order =T, min.freq =3)
+
+```
+
+\item Create a \textit{document term matrix} called \texttt{DTM} that includes the argument \texttt{ control = list(weighting = weightTfIdf)}
+
+```{r Q4.6}
+DTM <- DocumentTermMatrix(Corpus, control = list(weighting = weightTfIdf))
+
+```
+
+\item Finally, report the 50 words with the the highest tf.idf scores using a lower frequency bound of .8.
+
+
+```{r Q4.7, eval = F}
+
+findFreqTerms(DTM, lowfreq = 0.8)[1:50]
+```
+
+
+\texttt{ 
+ [1] "–clewandowski"     "–cuomo"
+ 
+ [3] "–donald"           "–tw"  
+ 
+ [5] "—amazing"          "—bad" 
+ 
+ [7] "—big"              "—conduct" 
+ 
+ [9] "—crazy"            "—donald"  
+ 
+[11] "—everybody"        "—gt"     
+
+[13] "—hit"              "—impeachmentevery"
+
+[15] "—including"        "—loser"         
+
+[17] "—mexico"           "—pablo"        
+
+[19] "—political"        "—president"    
+
+[21] "—remember"         "—total"       
+
+[23] "—vote…"            "—wonder"     
+
+[25] "—worst"            "¡latinos"     
+
+[27] "‘’d"               "‘’m"         
+
+[29] "‘’re"              "‘’s"        
+
+[31] "‘’t"               "‘’ve"      
+
+[33] "‘abuse"            "‘amnesty’"  
+
+[35] "‘angel"            "‘antibush’" 
+
+[37] "‘bad"              "‘big"       
+
+[39] "‘bill"             "‘blew"      
+
+[41] "‘boring’"          "‘bring"    
+
+[43] "‘caravan’"         "‘cataclysmic’"   
+
+[45] "‘climate"          "‘climate’"      
+
+[47] "‘clinton"          "‘close"         
+
+[49] "‘completely"       "‘crime"  }
+
+
+\eeit
+
+
+
+\eenum
+
+
+

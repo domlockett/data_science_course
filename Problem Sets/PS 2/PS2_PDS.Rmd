@@ -1,0 +1,106 @@
+---
+title: ""
+output: pdf_document
+header-includes:
+- \newcommand{\benum}{\begin{enumerate}}
+- \newcommand{\eenum}{\end{enumerate}}
+- \newcommand{\beit}{\begin{itemize}}
+- \newcommand{\eeit}{\end{itemize}}
+---
+
+\begin{center}
+{\Large{\textbf{Problem Set 2}}} \\
+\vspace{4 bp}
+Due February 13, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+
+\benum
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. 
+  \item Work on git. Fork the repository found at https://github.com/domlockett/PDS-PS2 and add your code, committing and pushing frequently. Use meaningful commit messages – these may affect your grade.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TAs or use their office hours.
+  \item For students new to programming, this may take a while. Get started.
+  
+\eenum
+
+\section*{for loops, if else, while}
+
+\benum
+
+  \item Write a for loop that iterates over the numbers 1 to 7 and prints the cube of each number using print().
+
+
+
+ \beit
+ 
+ \item Write a for loop that does 1000 simulations of where two fair dice are rolled. Use the function \texttt{set.seed(14)} so that we all have the same values when using the sample() function. 
+ 
+\beit
+
+ \item Write the loop such that if the two dice total to values 8,9,10,11,12 the game ends immediately
+ \item If the first roll does not equal one of those five values continue to roll the dice until you roll either a 2 or a 6
+ \item What is the average number of dice casts per game
+
+\eeit
+\eenum
+
+\section*{Functions}
+
+\benum
+  \setcounter{enumi}{2}
+\item Load the following data: http://politicaldatascience.com/PDS/Problem%20Sets/Problem%20Set%202/GSS-data.csv. 
+
+Now create a function called \texttt{vote.choice} which can take one of three arguments: "Trump", "Clinton", or "Other". The function should return the number of participants who voted for Trump when you input "Trump" into the function; the number of participants who voted for Clinton when you input "Clinton" into the function; and the number of participants that voted for neither when you input "Other". 
+
+\beit
+
+ \item Now edit this function so that if a pre-defined object, numeric value or misspelled word is entered, the function returns the message "Please enter either 'Trump' 'Clinton' or 'Other' into the function to return a valid response".
+
+\eeit
+
+\item Run the following code: 
+
+```{r, eval=F, results='asis'} 
+install.packages('fivethirtyeight') 
+library(fivethirtyeight) 
+```
+
+
+
+Now review the data in the \texttt{cabinet\_turnover} object (this is loaded into your space when you load the library even though you cannot see it in the global space. You can also assign it to your own object if you'd like.). 
+
+Create a function named \texttt{appoint} which allows you to type in the name of a president as an argument (i.e appoint("Trump")) and returns the proportion of time appointees spent serving each adminstration i.e the number of days appointees served for each administration, on average, divided by the number of days the particular president served.
+
+To illustrate the average number of days all appointees served in the Reagan administration was 2140.959. Below you can see that Reagan served 2922 days. So appointees served 73\% of Reagan's administration, on average (2140.959/2922).
+
+For simplicity, here are the number of days each president served:
+
+Carter: 1461
+
+Reagan: 2922
+
+Bush 41: 1461
+
+Clinton: 2922
+
+Bush 43: 2922
+
+Obama: 2922
+
+Trump: 1105\footnote{As of January 30, 2020}
+
+
+
+\item 
+
+Now you will use the \texttt{congress\_age} data set from the \texttt{fivethirtyfive} package. Create a function called \texttt{congress\_stats} that takes two arguments "congress" and "state". 
+
+When you enter "congress" into the function it should return the average age of congressmembers for each congressional era. Your function should return 34 results which display the average age of congressmembers of an era as well as the congress. For example the most recent congress is the 113 Congress so one of the 34 results will be \texttt{57.6 113}.
+
+Similarly, when you input "state" into the function, it should return the average age of congressmembers by state. The function will then return 50 results an example of one of the 50 is \texttt{53.4 TX}.
+
+
+
+\eenum

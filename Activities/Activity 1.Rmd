@@ -1,0 +1,44 @@
+---
+title: ""
+output: pdf_document
+---
+\center
+Statistical Computing Activity 
+Activity 1
+\begin{flushleft}\textbf{Put your name at the top of of this sheet. Write the R code to answer the following questions. Write the code and then show what the computer returns when that code is run.}
+\end{flushleft}
+\vspace{4em}
+
+1. $e^{2}$
+\vspace{4em}
+2. $((4)^{5})^{1/8}$
+
+
+\vspace{4em}
+
+
+3. $\sin(\frac{\pi}{3}) \times (1 + \tan(\frac{\pi}{3}))$
+
+\vspace{4em}
+
+
+4. $\sqrt{14^3 - 6^{\frac{3}{2}}}$
+
+\vspace{4em}
+
+
+5. $|-\ln(2\pi \times (\sqrt{e^9}))|$
+
+\vspace{4em}
+
+
+
+6. $\sum^{50}_{i=5} i^{i-1}$
+
+
+\vspace{4em}
+
+
+7. $\forall_i \in [1,50] \sqrt{(i)}$
+
+

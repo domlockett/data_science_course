@@ -1,0 +1,235 @@
+---
+title: ""
+output: pdf_document
+header-includes:
+- \newcommand{\benum}{\begin{enumerate}}
+- \newcommand{\eenum}{\end{enumerate}}
+- \newcommand{\beit}{\begin{itemize}}
+- \newcommand{\eeit}{\end{itemize}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, results = 'asis')
+```
+
+
+\begin{center}
+{\Large{\textbf{Problem Set 4}}} \\
+\vspace{4 bp}
+Due April 2, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+
+\benum
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. 
+  \item Work on git. Fork the repository found at https://github.com/domlockett/PDS-PS3 and add your code, committing and pushing frequently. Use meaningful commit messages – these may affect your grade.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TAs or use their office hours.
+  \item For students new to programming, this may take a while. Get started.
+  \item You will need to install \texttt{ggplot2} and \texttt{dplyr} to complete this dataset.
+  
+\eenum
+
+
+\section*{Statistics}
+
+\benum
+
+ \item Load the following data: http://politicaldatascience.com/PDS/Datasets/GSS-data.csv. \\
+ 
+ The variable \texttt{poleff11} asks participants to rate their level of agreement with the statement ``People like me don't have any say about what the government does'' (see the codebook for more information on all variables in this dataset at: http://politicaldatascience.com/PDS/Datasets/gss_codebook.csv). 
+
+ \item Convert this variable into a numeric where higher values indicate higher levels of political efficacy (1- strongly agrees with the statement; 5- strongly disagrees with the statment)
+
+```{r Q1.1, eval = T}
+library(tidyverse)
+data <- read_csv('http://politicaldatascience.com/PDS/Datasets/GSS-data.csv')
+data$poleff <- recode(data$poleff11, "Strongly agree"= 1, "Agree" = 2, 'Neither agree nor disagree'=3, 'Disagree'=4, 'Strongly disagree'=5 )
+
+```
+
+ 
+\item What is the proportion of individuals from the entire sample who do not feel as though they have a say in the government? The proportion of those who do feel as though they have a say?
+
+```{r Q1.2, eval = T}
+sum(data$poleff < 3, na.rm=T)/sum(is.na(data$poleff)==F)
+sum(data$poleff > 3, na.rm=T)/sum(is.na(data$poleff)==F)
+
+```
+
+
+\item Using a sample of \textbf{25} what is the average level of efficacy individuals feel on the one to five scale? At 100? 500?
+
+```{r Q1.3 , eval =T}
+mean(sample(data$poleff,size=25, replace =F), na.rm =T)
+mean(sample(data$poleff,size=100, replace =F), na.rm =T)
+mean(sample(data$poleff,size=500, replace =F), na.rm =T)
+```
+
+\item Create a variable called \texttt{trials\_25} where we pull a random sample of 25 from the \texttt{poleff11} data and calculate the mean 500 times . 
+
+
+```{r Q1.4}
+library(mosaic)
+
+trials <- do(500)*mean(sample(data$poleff,size=25, replace =F), na.rm =T)
+
+```
+
+\item Now create a variable called \texttt{trials\_100} where we do 500 trials with a sample of 100 instead of 25. Draw a histogram of the sampling distribution fo the trials for the two trials you just conducted. Save these plots in your repository. 
+
+```{r Q1.5}
+
+trials <- do(1000)*mean(sample(data$poleff,size=100, replace =F), na.rm =T)
+
+```
+
+\item What notable difference occur when we use a larger sample size in our trials?
+
+
+
+\section*{Bootstrapping}
+
+\benum
+  \setcounter{enumi}{1}
+
+\item \textbf{Run the command \texttt{set.seed(25)}.} Create a new variable \texttt{eff_subset} which draws a sample of 300 observations from the original \texttt{poleff11} data. 
+
+```{r Q2.1, eval=T}
+set.seed(25)
+eff_subset <- sample(data$poleff, size = 300, replace =F, na.rm=T)
+
+```
+
+
+\beit
+
+\item Draw a sample of 25 from \texttt{eff_subset} and calculate the mean. Repeat this task 500 times and store the results in a variable named \texttt{trials}.
+
+```{r Q2.2 , eval =T}
+trials <- do(500)*mean(sample(eff_subset,size=25, replace =F), na.rm =T)
+
+```
+
+\item What is the mean of the 500 trials? 1000 trials? How do these values compare to the mean of the actual \texttt{poleff11} variable?
+
+```{r Q2.3 , eval =T}
+trials2 <- do(1000)*mean(sample(eff_subset,size=25, replace =F), na.rm =T)
+mean(trials)
+mean(trials2)
+mean(data$poleff, na.rm=T)
+
+```
+
+\item Notice that with pulling random samples of only 25 observations from \textbf{a quarter of the data} we are able to accurately approximate the mean of our entire data. That is the logic of bootstrapping, with only a small sample (here our population is the entire dataset), one can make reasonable approximations about the population!
+
+
+\eeit
+
+\eenum
+
+
+\section*{Supervised Learning}
+
+ \item 
+
+\beit
+ \item 
+ 
+```{r Q3.1, eval = F}
+
+```
+
+\item
+
+```{r Q3.2, eval = F}
+
+```
+
+\item 
+
+```{r Q3.3, eval = F}
+
+```
+
+\item 
+
+```{r Q3.4, eval = T}
+  
+```
+
+\item 
+
+```{r Q3.5, eval = T}
+```
+
+\item 
+
+```{r Q3.6, eval = T}
+
+
+```
+
+\item 
+
+```{r Q3.7, eval = T}
+
+```
+
+\item 
+
+```{r Q3.8, eval = T}
+
+```
+
+
+\item 
+
+
+```{r Q3.9, eval = T}
+```
+
+\item 
+
+
+```{r Q3.10, eval = T}
+
+```
+
+
+\eeit
+\item 
+
+```{r Q4 setup, eval= T}
+
+```
+
+\beit
+\item 
+
+```{r Q4.1}
+
+```
+
+\item 
+
+
+```{r Q4.2}
+
+```
+
+
+
+\item 
+
+```{r Q4.3}
+
+```
+
+\eeit
+
+
+
+\eenum
+

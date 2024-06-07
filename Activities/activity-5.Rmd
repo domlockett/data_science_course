@@ -1,0 +1,26 @@
+---
+title: ''
+output: pdf_document
+---
+  
+
+\begin{center}
+{\large    Political Data Science\\
+   Activity 4 }
+\end{center}
+
+**With your group, figure out how to do the following**
+
+
+Run the commands below, and then answer the questions listed below.
+```{r, eval=FALSE}
+rm(list=ls())
+example(lm)
+newLM<-unclass(lm.D90)
+```
+
+1. What is the class of element 'model' component of 'lm.D90'?
+2. What is the class of 'newLM'?  How does this compare with the class of 'lm.D90'?
+3. Change the 'names' attribute of the 'model' component in 'lm.D90' to 'Var1' 'Var2'
+4. Randomly switch the values of the first ten observations in the \texttt{group} objects.
+5. Create a new list containing the regression coefficients from all four models.

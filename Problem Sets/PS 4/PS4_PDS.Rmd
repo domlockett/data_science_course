@@ -1,0 +1,102 @@
+---
+title: ""
+output: pdf_document
+header-includes:
+- \newcommand{\benum}{\begin{enumerate}}
+- \newcommand{\eenum}{\end{enumerate}}
+- \newcommand{\beit}{\begin{itemize}}
+- \newcommand{\eeit}{\end{itemize}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, results = 'asis')
+```
+
+
+\begin{center}
+{\Large{\textbf{Problem Set 4}}} \\
+\vspace{4 bp}
+Due April 2, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+
+\benum
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. 
+  \item Work on git. Fork the repository found at https://github.com/domlockett/PDS-PS3 and add your code, committing and pushing frequently. Use meaningful commit messages – these may affect your grade.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TAs or use their office hours.
+  \item For students new to programming, this may take a while. Get started.
+  \item You will need to install \texttt{ggplot2} and \texttt{dplyr} to complete this dataset.
+  
+\eenum
+
+
+\section*{Sample Statistics}
+
+\benum
+
+ \item Load the following data: http://politicaldatascience.com/PDS/Datasets/GSS-data.csv. \\
+ 
+ The variable \texttt{poleff11} asks participants to rate their level of agreement with the statement ``People like me don't have any say about what the government does'' (see the codebook for more information on all variables in this dataset at: http://politicaldatascience.com/PDS/Datasets/gss_codebook.csv). 
+ 
+\beit
+
+ \item Convert this variable into a numeric where higher values indicate higher levels of political efficacy (1- strongly agrees with the statement; 5- strongly disagrees with the statment) and all other values (`Cant choose' etc.) become NA's.
+ 
+  \item What is the proportion of individuals from the entire sample who do not feel as though they have a say in the government? The proportion of those who do feel as though they have a say?
+
+
+  \item Using a sample of \textbf{25} what is the average level of efficacy individuals feel on the one to five scale? At 100? 500?
+  
+  \item Pull a random sample of 25 from the \texttt{poleff11} data and calculate the mean. Now repeat this process 500 times and store these values in a variable called \texttt{trials\_25}. 
+
+\item Now create a variable called \texttt{trials\_100} where we do 500 trials with n=100 instead of 25. 
+
+\item Draw a histogram of the sampling distribution for the two trials you just conducted. Give the plots meaningful titles and axis labels. Save these plots in your repository. 
+
+\item What notable difference occur when we use a larger sample size in our trials?
+  
+\eeit
+
+\eenum
+
+\section*{Bootstrapping}
+
+\benum
+  \setcounter{enumi}{1}
+
+\item \textbf{Run the command \texttt{set.seed(25)}.} Create a new variable \texttt{eff\_subset} which draws a sample of 300 observations from the original \texttt{poleff11} data. 
+
+\beit
+
+\item Draw a sample of 25 from \texttt{eff\_subset} and calculate the mean. Repeat this task 500 times and store the results in a variable named \texttt{trials}.
+
+\item What is the mean of the 500 trials? 1000 trials? How do these values compare to the mean of the actual \texttt{poleff11} variable?
+
+
+\item Notice that with pulling random samples of only 25 observation \textbf{from a fraction of the data} we are able to approximate the mean of the entire data quite well. That is the logic of bootstrapping, with only a small sample (here our population is the entire dataset), one can make reasonable approximations about the population!
+
+\eeit
+
+
+
+\eenum
+
+\section*{Supervised Learning}
+\benum
+ \item 
+
+\beit
+ \item 
+ 
+
+
+\item
+
+\eeit
+
+
+
+\eenum
+

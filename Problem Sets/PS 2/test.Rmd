@@ -1,0 +1,81 @@
+---
+title: ""
+output: pdf_document
+header-includes:
+- \newcommand{\benum}{\begin{enumerate}}
+- \newcommand{\eenum}{\end{enumerate}}
+- \newcommand{\beit}{\begin{itemize}}
+- \newcommand{\eeit}{\end{itemize}}
+---
+
+\begin{center}
+{\Large{\textbf{Problem Set 2}}} \\
+\vspace{4 bp}
+Due February 13, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+
+\benum
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. Once your script is finished, please email Dominique at dlockett@wustl.edu.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TA or use her office hours.
+  \item You will be graded on how well your code and functions are commented.
+  
+\eenum
+
+\section*{for loops, if else, while}
+
+\benum
+
+ \item Calculate the following probabilities:
+
+\beit 
+
+\item Probability that in 60 tosses of a fair coin the head comes up:
+
+\beit
+
+ \item 15, 20, or 30 times
+ \item less than 20 times
+ \item between 20 and 30 times
+ 
+\eeit
+
+\eeit
+
+ \item Write a for loop that does 1000 simulations of where two fair dice are rolled.
+ 
+\beit
+
+ \item Write the loop such that if the two dice total to values 8,9,10,11,12 the game ends immediately
+ \item If the first roll does not equal one of those five values continue to roll the dice until you roll either a 2 or a 6
+ \item What is the average number of dice casts per game
+
+\eeit
+
+ \item Run the code below. The game object includes the results of five different games among 2 players. Write a for loop which returns "Win!" if Player 1 wins the game and write a function which returns "Lose :(" if Player two wins.
+\vspace{1em}
+```{r, echo =T, eval=F, results="asis"}
+game1 <- list("Game 1" =cbind(3   ,2 ),"Game 2" = cbind(1,2), 
+"Game 3" =cbind(8,4), "Game 4"= cbind(2, 1), "Game 5" = cbind(4, 6))
+ 
+colname <- c("Player 1", "Player 2")
+for (i in seq_along(game1)){colnames(game1[[i]]) <- colname}
+```
+
+\beit
+ \item Now, run this new code and add to your for loop a function that returns "Draw!" if player 1 and player 2 have a tie and also include an argument that returns the statement "Warning, there were not enough values in this game" if there is an NA in the eithe players' values.
+ 
+\eeit
+
+\vspace{1em}
+
+```{r, echo =T, eval=F, results="asis"}
+game2 <- list("Game 1" =cbind(3   ,3 ),"Game 2" = cbind(NA,2), "Game 3"
+=cbind(8,4), "Game 4"= cbind(2, NA), "Game 5" = cbind(4, 4), "Game 5" = cbind(3, 4))
+colname <- c("Player 1", "Player 2")
+for (i in seq_along(game2)){colnames(game2[[i]]) <- colname}
+```
+
+\eenum

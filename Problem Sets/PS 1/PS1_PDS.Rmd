@@ -1,0 +1,56 @@
+---
+title: ""
+output: pdf_document
+---
+
+\begin{center}
+{\Large{\textbf{Problem Set 1}}} \\
+\vspace{4 bp}
+Due January 23, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+\begin{enumerate}
+\item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. Once your script is finished, please email Dominique at dlockett@wustl.edu.
+\item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+\item If you have any questions regarding the Problem Set, contact the TA or use her office hours.
+\item For students new to programming, this may take a while. Get started.
+\end{enumerate}
+
+\section*{Working with data in R}
+For this assignment, I have subsetted the expenditures data for all campaigns and PACs available from Open Secrets. The reduced dataset is available at:
+
+\noindent \url{https://www.dropbox.com/s/z6gw9lvve6jogi5/Expends2002.txt}
+
+\noindent Before you begin, you should get familiar with the variables. The codebook for this dataset is available at:
+
+\noindent \url{http://www.opensecrets.org/resources/datadictionary/Data%20Dictionary%20Expenditures.htm}
+
+\noindent Below is a detailed listing of the data management tasks that you will have to complete for this assignment. You should provide the R script needed to execute each task with clear documentation.
+
+\begin{enumerate}
+\item Open the dataset as a dataframe. This dataframe should have the following properties: a) The column names should match the column names in the original dataset. b) The row names should correspond to the variable \texttt{ID} in the original dataset.
+\item Change the variable name \texttt{TransID} to \texttt{Useless}.
+\item Remove the variables \texttt{Useless}, and \texttt{Source} from the dataframe.
+\item Change the variable \texttt{EntType} to a factor. How many levels does this variable have?  
+\item The variable \texttt{State} contains several obvious errors, as it includes non-existent state codes. 
+ \begin{itemize}
+  \item Identify observations that have non-existent state codes. 
+  \item Write a script to recode these observations. Use the additional information in the dataset (candidate name, city, zip code) to correctly identify each state.
+ \end{itemize}
+
+\item Remove all observations from the dataset where the variable \texttt{State} is missing.  Report the number of observations after removing missing values.
+\item Change the variable \texttt{Zip} into a numeric. Be sure to document what you do with missing cases. What is the mean of this variable?
+\item Create new variables that contain the following information (you will be making several variables), and answer the questions: 
+\begin{itemize}
+\item The number of words in the \texttt{Descrip} variable. What is the median value of this new variable?
+\item A variable containing the numeric portion of \texttt{CRPFilerid}. This variable should be of length 8 for all observations. What is the number of unique values of this variable? 
+\item A vector containing the first four digits of \texttt{Zip}. What is the most frequent value of this vector?
+\item A boolean indicating whether the \texttt{Descrip} variable contains the word ``Communications'' REGARDLESS OF CAPITALIZATION. Report the number of \texttt{TRUE} values in this boolean. 
+\item A variable indicating that either \texttt{CRPFilerid} is ``N'' or that BOTH \texttt{Amount} is greater than 500 and \texttt{Descrip} is non-missing. Report the number of \texttt{TRUE} values. 
+\item EXTRA CREDIT: A variable that provides the most common letter in the \texttt{Descrip} variable.
+\end{itemize}
+
+\item Write a script that subsets the data by state, and writes out a unique CSV file for each subset, where each file has a unique (and meaningful) name (hint: look at by() function).
+\end{enumerate}
+

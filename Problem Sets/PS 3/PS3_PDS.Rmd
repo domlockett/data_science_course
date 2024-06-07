@@ -1,0 +1,157 @@
+---
+title: ""
+output: pdf_document
+header-includes:
+- \newcommand{\benum}{\begin{enumerate}}
+- \newcommand{\eenum}{\end{enumerate}}
+- \newcommand{\beit}{\begin{itemize}}
+- \newcommand{\eeit}{\end{itemize}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning = F)
+```
+
+
+\begin{center}
+{\Large{\textbf{Problem Set 3}}} \\
+\vspace{4 bp}
+Due February 27, 10:00 AM (Before Class) \\
+\end{center}
+
+\section*{Instructions}
+
+\benum
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. 
+  \item Work on git. Fork the repository found at https://github.com/domlockett/PDS-PS3 and add your code, committing and pushing frequently. Use meaningful commit messages – these may affect your grade.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TAs or use their office hours.
+  \item For students new to programming, this may take a while. Get started.
+  \item You will need to install \texttt{ggplot2} and \texttt{dplyr} to complete this dataset.
+  
+\eenum
+
+\section*{\texttt{ggplot2}}
+
+\benum
+
+  \item Finish the exercise we started in class on 2/11/2020:
+
+- Alabama, Arkansas, California, Colorado, Maine, Massachusetts, Minnesota, North Carolina, Oklahoma, Tennessee, Texas, Utah, Vermont, and Virginia will all hold their primraries on March 3
+- You have been assigned to create a visulaization of the state of the race for this date.
+- You will make a plot to show this.
+- In addition to the kinds of issues discussed above
+    + Change to the minimial theme
+    + Figure out how to change the axis labels and legends beyond the defaults
+- Visit https://ggplot2.tidyverse.org/reference/ 
+
+ \item Finish the exercise we started in class on 2/13/2020:
+ 
+- Re-organize the dataset so that there is only one row for each candidate-state dyad
+
+- Feel free to limit this down to only the relevant candidates
+
+- Compare the size of this dataset to our original dataset using the object_size command.
+
+
+
+\eenum
+
+
+\section*{\texttt{tidyverse}}
+\benum
+  \setcounter{enumi}{2}
+
+ \item Now you are going to combine two datasets in order to observe how many endorsements each candidate recieved using \textbf{only} \texttt{dplyr} functions. First, create two new objects \texttt{polls} and \texttt{Endorsements}:
+ 
+```{r Q3 setup, eval = F}
+library(fivethirtyeight)
+library(tidyverse)
+polls <- read_csv('https://jmontgomery.github.io/PDS/Datasets/president
+_primary_polls_feb2020.csv')
+Endorsements <- endorsements_2020
+```
+
+```{r, echo =F, eval =T}
+library(tidyverse)
+polls <- read_csv('https://jmontgomery.github.io/PDS/Datasets/president_primary_polls_feb2020.csv')
+```
+\beit
+
+
+\item Change the \texttt{Endorsements} variable name \texttt{endorsee} to \texttt{candidate\_name}
+
+
+
+\item Change the \texttt{Endorsements} dataframe into a \texttt{tibble} object.
+
+
+\item Filter the \texttt{poll} variable to only include the following 6 candidates: Amy Klobuchar, Bernard Sanders,Elizabeth Warren, Joseph R. Biden Jr., Michael Bloomberg, Pete Buttigieg \textbf{and} subset the dataset to the following five variables: \texttt{candidate\_name, sample\_size, start\_date, party, pct}
+
+
+
+\item Compare the candidate names in the two datasets and find instances where the a candidates name is spelled differently i.e. Bernard vs. Bernie. Using only \texttt{dplyr} functions, make these the same across datasets. 
+
+
+
+\item Now combine the two datasets by candidate name using \texttt{dplyr} (there will only be five candidates after joining).
+
+
+
+\item Create a variable which indicates the number of endorsements for each of the five candidates using \texttt{dplyr}.
+
+
+
+\item Plot the number of endorsement each of the 5 candidates have. Save your plot as an object \texttt{p}. 
+
+
+
+
+\item Run the following code: \texttt{p + theme\_dark()}. Notice how you can still customize your plot without rerunning the plot with new options. Save this plot in your forked repository
+
+
+\item Now, using the knowledge from the last step change the label of the X and Y axes to be more informative, add a title, and use your favorite theme. Save the plot in your forked repository.
+
+\eeit
+
+\eenum
+
+\section*{Text-as-Data}
+
+\benum
+  \setcounter{enumi}{3}
+
+\item For this assignment you will be analyzing Tweets from President Trump for various characteristics. 
+
+```{r Q4 setup, eval= T}
+library(tidyverse)
+#install.packages('tm')
+library(tm) 
+#install.packages('lubridate')
+library(lubridate)
+#install.packages('wordcloud')
+library(wordcloud)
+tweets <- read_csv('https://politicaldatascience.com/PDS/Datasets/trump_tweets.csv')
+```
+
+\beit
+
+  \item First separate the \texttt{created\_at} variable into two new variables where the date and the time are in separate columns. \textbf{Then} report the range of dates that is in this dataset.
+
+
+  \item Using \texttt{dplyr} subset the data to only include original tweets (remove retweets) and show the text of the President's \textbf{top 5} most popular and most retweeted tweets. (Hint: The \texttt{match} function can help you find the index once you identify the largest values.) 
+
+  \item Remove extraneous whitespace, remove numbers and punctuation, convert everything to lower case and remove the standard english stop words and include the following as stop words: c("see", "people",'new','want','one','even','must','need','done','back','just','going', 'know', 'can','said','like','many','like','realdonaldtrump'). 
+  
+  
+  
+\item Now create a \texttt{wordcloud} to visualize the top 50 words the President uses in his tweets. Use only words that occur at least three times. Save the plot into your forked repository.
+  
+\item Create a \textit{document term matrix} called \texttt{DTM} that includes the argument \texttt{ control = list(weighting = weightTfIdf)}
+
+
+\item Finally, report the 50 words with the the highest tf.idf scores using a lower frequency bound of .8.
+
+\eeit
+
+\eenum

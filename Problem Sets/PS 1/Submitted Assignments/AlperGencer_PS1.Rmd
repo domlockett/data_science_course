@@ -1,0 +1,296 @@
+---
+title: "Problem Set 1"
+subtitle: "Political Data Science - Spring 2020"
+date: "January 23, 2020"
+author: "Gencer, Alper Sukru"
+output: pdf_document
+header-includes:
+  - \usepackage{color}
+  - \usepackage{float}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, fig.pos = 'H')
+```
+
+\section{Instructions}
+
+\begin{enumerate}
+  \item The following questions should each be answered within an R script. Be sure to provide many comments in the script to facilitate grading. Undocumented code will not be graded. Once your script is finished, please email Dominique at dlockett@wustl.edu.
+  \item You may work in teams, but each student should develop their own R script. To be clear, there should be no copy and paste. Each keystroke in the assignment should be your own.
+  \item If you have any questions regarding the Problem Set, contact the TA or use her office hours.
+  \item For students new to programming, this may take a while. Get started. 
+\end{enumerate}
+
+\newpage
+\section{Working with data in R}
+
+For this assignment, I have subsetted the expenditures data for all campaigns and PACs available from Open Secrets. The reduced dataset is available at:
+
+\indent https://www.dropbox.com/s/z6gw9lvve6jogi5/Expends2002.txt
+
+Before you begin, you should get familiar with the variables. The codebook for this dataset is available at:
+
+\indent http://www.opensecrets.org/resources/datadictionary/Data%20Dictionary%20Expenditures.htm
+
+Below is a detailed listing of the data management tasks that you will have to complete for this assignment. You should provide the R script needed to execute each task with clear documentation.
+
+\subsection{1. Open the dataset as a dataframe. This dataframe should have the following properties:}
+  \begin{enumerate} 
+  \item The column names should match the column names in the original dataset. 
+  \item The row names should correspond to the variable ID in the original dataset.
+  \end{enumerate}
+```{r getting ready, include=TRUE, warning = FALSE, message = FALSE}
+rm(list = ls())
+# install.packages("data.table")
+library("data.table")
+library(readr)
+my.data <- read_csv("Expends2002.csv")
+View(my.data)
+# head(my.data)
+# tail(my.data)
+# install.packages("readr")
+```
+\newpage
+\subsection{2. Change the variable name **TransID** to **Useless**.}
+\bigskip
+```{r name change, include=TRUE, warning = FALSE, message = FALSE}
+library("tidyverse")
+my.data <- my.data %>%
+  rename(
+    Useless = TransID
+  )
+```
+\bigskip
+\subsection{3. Remove the variables **Useless**, and **Source** from the dataframe.}
+\bigskip
+```{r removing some variables, include=TRUE, warning = FALSE, message = FALSE}
+my.data = select(my.data, -3, -21)
+ls(my.data)
+```
+\newpage
+
+\subsection{4. Change the variable **EntType** to a factor. How many levels does this variable have?}
+\bigskip
+```{r changing variable types, include=TRUE, warning = FALSE, message = FALSE}
+# Note that right now, the variable EntType is a character (string) variable
+my.data <- my.data %>%
+  mutate(EntType = as.factor(EntType))
+class(my.data$EntType)
+levels(my.data$EntType)
+```
+As it can be seen above, there are seven levels of the factor variable **EntType**, excluding the missing values.
+\newpage
+
+\subsection{5. The variable **State** contains several obvious errors, as it includes non-existent state codes.}
+  \begin{itemize} 
+  \item Identify observations that have non-existent state codes.
+  \item Write a script to recode these observations. Use the additional information in the dataset (candidate name, city, zip code) to correctly identify each state.
+  \end{itemize}
+```{r changing finding problem 1, include=TRUE, warning = FALSE, message = FALSE}
+# Note that right now, the variable State is a character (string) variable. 
+#Let's change it to factor variable.
+my.data <- my.data %>%
+  mutate(State = as.factor(State))
+levels(my.data$State)
+```
+\bigskip
+See that "LL", "St", "ZZ" are invalid state codes. Let's see what are these:
+
+\bigskip
+```{r changing finding problem 2, include=TRUE, warning = FALSE, message = FALSE}
+print(my.data$Zip[(my.data$State == "St" | my.data$State == "LL" | my.data$State == "ZZ") 
+                  & is.na(my.data$State) == FALSE])
+print(my.data$City[(my.data$State == "St" | my.data$State == "LL" | my.data$State == "ZZ") 
+                   & is.na(my.data$State) == FALSE])
+print(my.data$CmtelD_EF[(my.data$State == "St" | my.data$State == "LL" | my.data$State == "ZZ") 
+                        & is.na(my.data$State) == FALSE])
+print(my.data$Pacshort[(my.data$State == "St" | my.data$State == "LL" | my.data$State == "ZZ") 
+                       & is.na(my.data$State) == FALSE])
+print(my.data$Recipcode[(my.data$State == "St" | my.data$State == "LL" | my.data$State == "ZZ") 
+                        & is.na(my.data$State) == FALSE])
+print(my.data$Cycle[(my.data$State == "St" | my.data$State == "LL" | my.data$State == "ZZ") 
+                    & is.na(my.data$State) == FALSE])
+
+```
+\bigskip
+We see that there are three problematic cases. When we see other information, we see that:
+\begin{enumerate}
+\item First candidate (THURMAN, Karen L.) is from Florida (note that she ran in 2002, she has a campaign called "Thurman for Congress", and she is Democrat) and funded by an organized located in Washington DC.
+\item Second candidate is from Virgin Islands (note that her address is KINGSHILL VI).
+\item Third candidate is from Iowa (note that she is a candidate from the Republican Party of Iowa with ID = C00014498).
+\end{enumerate}
+Let's recode accordingly:
+\bigskip
+```{r changing finding problem 3, include=TRUE, warning = FALSE, message = FALSE}
+# Note that right now, the variable State is a character (string) variable. 
+#Let's change it to factor variable.
+# help(sub)
+# Note that right now, the variable State is a character (string) variable. 
+#Let's change it to factor variable.
+my.data <- my.data %>%
+  mutate(State = sub(pattern = "St", replacement = "DC", State)) %>%
+  mutate(State = sub(pattern = "LL", replacement = "VI", State)) %>%
+  mutate(State = sub(pattern = "ZZ", replacement = "IA", State))
+my.data <- my.data %>%
+  mutate(State = as.factor(State))
+levels(my.data$State)
+```
+\bigskip
+
+\subsection{6. Remove all observations from the dataset where the variable **State** is missing. Report the number of observations after removing missing values.}
+\bigskip
+
+```{r removing the missing observations, include=TRUE, warning = FALSE, message = FALSE}
+# In the data, the missing in State is represented "  ".
+levels(my.data$State)
+
+# Let's see how many missing observations there are.
+sum(is.na(my.data$State))
+
+# So there are 88 missing values. Let's remove these.
+my.data <- my.data %>%
+  drop_na(State)
+
+# Let's see how many observations there remained:
+sum(!is.na(my.data$State))
+```
+
+\bigskip
+As it can be seen above, 19912 observations are left. 
+
+\newpage
+\subsection{7. Change the variable **Zip** into a numeric. Be sure to document what you do with missing cases. What is the mean of this variable?}
+\bigskip
+```{r variable ZIP, include=TRUE, warning = FALSE, message = FALSE}
+# In the data, the missing in State is represented "         ".
+sum(is.na(my.data$Zip))
+
+my.data <- my.data %>%
+  mutate(Zip = as.numeric(Zip))
+
+my.data$Zip[my.data$ID == 915857]
+
+mean(my.data$Zip, na.rm = TRUE)
+```
+\bigskip
+As it can be seen, the average Zip number is 48214902, which is 8 digit number. The reason is that some Zip codes are entered as 5 digit while other registered as 5 + 4 digits.
+\newpage
+
+\subsection{8. Create new variables that contain the following information (you will be making several variables), and answer the questions:}
+  \begin{enumerate} 
+  \item The number of words in the **Descrip** variable. What is the median value of this new variable?
+  \item A variable containing the numeric portion of **CRPFilerid**. This variable should be of length 8 for all observations. What is the number of unique values of this variable?
+  \item A vector containing the first four digits of **Zip**. What is the most frequent value of this vector?
+  \item A boolean indicating whether the **Descrip** variable contains the word “Communications” REGARDLESS OF CAPITALIZATION. Report the number of **TRUE** values in this boolean.
+  \item A variable indicating that either **CRPFilerid** is “N” or that BOTH Amount is greater than 500 and **Descrip** is non-missing. Report the number of TRUE values.
+  \item EXTRA CREDIT: A variable that provides the most common letter in the Descrip variable.
+  \end{enumerate}
+\bigskip
+```{r median value of Descrip, include=TRUE, warning = FALSE, message = FALSE}
+# The number of words in the **Descrip** variable. What is the median value of this new variable?
+word.counter <- function(x){
+  length(unlist(strsplit(as.character(x), "\\W+")))
+}
+
+my.data <- my.data %>%
+  mutate(Descrip.length = sapply(Descrip, word.counter))
+
+median(my.data$Descrip.length, na.rm = TRUE)
+sum(my.data$Descrip.length, na.rm = TRUE)
+```
+\bigskip
+The median value of the length of Describ is 20.
+\bigskip
+```{r creating CRPFilerid.numeric, include=TRUE, warning = FALSE, message = FALSE}
+# A variable containing the numeric portion of **CRPFilerid**. 
+# This variable should be of length 8 for all observations. 
+# What is the number of unique values of this variable?
+
+my.data <- my.data %>%
+  mutate(CRPFilerid.numeric = substr(CRPFilerid, 2, 9))
+
+length(unique(my.data$CRPFilerid.numeric))
+```
+\bigskip
+As it can be seen above, there are 2243 unique values.
+\bigskip
+```{r Zip revisited, include=TRUE, warning = FALSE, message = FALSE}
+# A vector containing the first four digits of **Zip**. 
+# What is the most frequent value of this vector?
+my.data <- my.data %>%
+  mutate(Zip.4digit = substr(Zip, 1, 4))
+
+fun_mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+fun_mode(my.data$Zip.4digit)
+length(my.data$Zip.4digit[my.data$Zip.4digit == 2000])
+
+```
+\bigskip
+See that the most recurring ZIP values are "2000" and there are 1631 times of this value.
+\bigskip
+```{r Importance of Communications, include=TRUE, warning = FALSE, message = FALSE}
+#  A boolean indicating whether the **Descrip** variable contains the word “Communications” 
+# REGARDLESS OF CAPITALIZATION. Report the number of **TRUE** values in this boolean.
+my.data <- my.data %>%
+  mutate(Descrip.commu.boolean = grepl("Communications", Descrip, ignore.case = TRUE))
+
+sum(my.data$Descrip.commu.boolean)
+```
+\bigskip
+See that there are 9 cases of "Communications" regardless of capitalization in the Descrip variable.
+\bigskip
+```{r New Variable Indicator, include=TRUE, warning = FALSE, message = FALSE}
+#  A variable indicating that either **CRPFilerid** is 
+# 1) “N” or 
+# 2) that BOTH Amount is greater than 500 and **Descrip** is non-missing. 
+# Report the number of TRUE values.
+
+# First let's create a new variable shows the first letter of **CRPFilerid**:
+my.data <- my.data %>%
+  mutate(CRPFilerid.first = substr(CRPFilerid, 1, 1))
+
+# Now let's see the numbers individually:
+sum(!is.na(my.data$Descrip)) # There are 18213 not missing in Descrip.
+sum((my.data$Amount > 500) & is.na(my.data$Amount) == FALSE) # 9019 observations with **Amount** greater than 500.
+sum((my.data$CRPFilerid.first == "N") & is.na(my.data$Amount) == FALSE)# 7247 observations starting with "N"
+
+# Now let's create the variable of interest.
+my.data <- my.data %>%
+  mutate(Indicator = ((CRPFilerid.first == "N") | ((Amount > 500) & (!is.na(Descrip)))))  
+
+sum(my.data$Indicator)
+```
+\bigskip
+See that there are 12392 TRUE values in our logical variable.
+\bigskip
+```{r New Variable Most Common Letter, include=TRUE, warning = FALSE, message = FALSE}
+#  EXTRA CREDIT: A variable that provides the most common letter in the Descrip variable.
+
+Descrip.letters <- unlist(str_split(my.data$Descrip, ""))
+Descrip.letters <- tolower(Descrip.letters)
+Descrip.letters <- gsub(" " , NA, Descrip.letters)
+Descrip.letters <- Descrip.letters[!is.na(Descrip.letters)]
+
+fun_mode(Descrip.letters)
+```
+\bigskip
+Notice thatthe most common character is "e".
+\bigskip
+\newpage
+\subsection{9. Write a script that subsets the data by state, and writes out a unique CSV file for each subset, where each file has a unique (and meaningful) name (hint: look at by() function).}
+\bigskip
+```{r Exporting by State, include=TRUE, warning = FALSE, message = FALSE}
+# Creating a list of dataframes by state:
+my.data.list <- by(my.data, INDICES=my.data$State, FUN = function(x) {my.data})
+
+# Exporting all these different files by state: 
+lapply(1:length(my.data.list), function(i) write.csv(my.data.list[[i]], 
+                                      file = paste0(names(my.data.list[i]), ".csv"),
+                                      row.names = FALSE))
+  
+```

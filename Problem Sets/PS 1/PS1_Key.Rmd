@@ -1,0 +1,156 @@
+---
+title: "Problem Set 1 Key"
+output: pdf_document
+---
+
+
+**1. Open the dataset as a dataframe. This dataframe should have the following properties: a) The column names should match the column names in the original dataset. b) The row names should correspond to the variable ID in the original dataset.**
+
+
+```{r, echo=T}
+Expends2002 <- read.csv(
+"C:/Users/dl0ck/OneDrive/Spring2020/Political Data Science/Problem Sets/PS 1/Expends2002.csv", 
+na.strings="", stringsAsFactors=FALSE)
+Expends2002 <- as.data.frame(Expends2002)
+```
+
+
+**2. Change the variable name TransID to Useless.**
+
+
+```{r}
+
+colnames(Expends2002)
+colnames(Expends2002)[3] <- "Useless"
+colnames(Expends2002)
+```
+
+**3. Remove the variables Useless, and Source from the dataframe**
+
+```{r}
+Expends2002 <- Expends2002[,-3]
+colnames(Expends2002)
+```
+
+
+**4. Change the variable EntType to a factor. How many levels does this variable have?**
+
+```{r}
+Expends2002$EntType <- as.factor(Expends2002$EntType)
+```
+
+**5. The variable State contains several obvious errors, as it includes nonexistent state codes.**
+
+  + Identify observations that have non-existent state codes.
+  
+  + Write a script to recode these observations. Use the additional information in the dataset (candidate name, city, zip code) to correctly identify each state.
+  
+```{r}
+unique(Expends2002$State)
+
+wrongstate<-subset(Expends2002,State=="St" | State=="ZZ" | State=="LL")
+Expends2002$State[Expends2002$State=="LL"] <- "IA"
+Expends2002$State[Expends2002$State=="ZZ"] <- "VI"
+Expends2002$State[Expends2002$State=="St"] <- "DC"
+```  
+  
+**6.  Remove all observations from the dataset where the variable State is missing. Report the number of observations after removing missing values.**
+
+```{r}
+Expends2002<-subset(Expends2002,State!="  ")
+nrow(Expends2002)
+
+```
+
+**7.  Change the variable Zip into a numeric. Be sure to document what you do with missing cases. What is the mean of this variable?**
+```{r}
+Expends2002$Zip <- as.numeric(Expends2002$Zip)
+#Missing cases become NA
+mean(Expends2002$Zip, na.rm=T)
+
+```
+
+**8. Create new variables that contain the following information (you will be making several variables), and answer the questions:**
+
+
+    
+
+    + The number of words in the Descrip variable. What is the median value of this new variable?
+```{r, echo=T}
+#Part 1
+df <- NULL
+df$descrip<- Expends2002$Descrip
+df <- as.data.frame(df)
+df$total <- sapply(df$descrip, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
+sum(df$total, na.rm =T) #The number of words in the Descrip variable
+median(df$total, na.rm=T) # The median number of words in each row
+```
+
+    + A variable containing the numeric portion of CRPFilerid. This variable should be of length 8 
+    for all observations. What is the number of unique values of this variable?
+```{r, echo=T}
+#Part 2
+df$filerid <- Expends2002$CRPFilerid
+df$filerid <- as.character(df$filerid)
+df$filerid <- sapply(df$filerid, function(x) gsub("[^0-9.-]", "", x)) #get rid of all the leters
+length(unique(df$filerid)) #number of unique values in this variable
+```
+
+    
+    + A vector containing the first four digits of Zip. What is the most frequent value of this vector?
+    
+```{r, echo =T}
+#Part 3
+df$zip <- substr(as.character(Expends2002$Zip), 0,4)
+#df$zip
+names(which(max(table(df$zip))==table(df$zip)))
+````
+
+    + A boolean indicating whether the Descrip variable contains the word “Communications” 
+    REGARDLESS OF CAPITALIZATION. Report the number of TRUE values in this boolean.
+    
+```{r, echo =T}
+#Part 4
+df$descrip <- as.character(df$descrip)
+#df$descrip
+#grepl("communications", df$descrip, ignore.case=T)
+sum(grepl("communications", df$descrip, ignore.case=T)==T)
+```
+
+    + A variable indicating that either CRPFilerid is “N” or that BOTH  Amount is greater than 
+    500 and Descrip is non-missing. Report the number of TRUE values.
+```{r, echo =T}
+#Part 5
+length(as.character(Expends2002$CRPFilerid))
+df$variable <- ifelse(grepl('N', as.character(Expends2002$CRPFilerid), ignore.case=T)==T, 1,0 
+| as.numeric(Expends2002$Amount >500) & Expends2002$Descrip!="")
+#df$variable #Variable indicating whether variable passes or fails above specifications
+#Expends2002[,c("CRPFilerid", "Amount", "Descrip")]
+```
+
+
+    
+    + EXTRA CREDIT: A variable that provides the most commonletter in the Descrip variable.
+```{r, echo=T}
+#Part 6
+df$descrip <- gsub(" ", "", df$descrip, fixed = T)
+names(table(unlist(strsplit(df$descrip, split =
+""))))[as.vector(table(unlist(strsplit(df$descrip, split =
+""))))==max(table(unlist(strsplit(df$descrip, split = ""))))]
+
+```
+
+
+**9. Write a script that subsets the data by state, and writes out a unique CSV file for each subset, where each file has a unique (and meaningful)name.**
+
+```{r}
+data <- by(Expends2002, Expends2002$State, function(x){Expends2002})
+length(data)
+#lapply(1:length(data), function(i) write.csv(data[[i]], file =
+#paste0(names(data[i]), ".csv"), row.names = FALSE))
+
+```
+
+
+
+```

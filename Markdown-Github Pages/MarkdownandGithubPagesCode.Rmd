@@ -1,0 +1,117 @@
+---
+title: "Markdown and Github Code"
+output: html_document
+---
+
+## Headers
+
+# First level
+
+## Second Level
+
+### Third Level
+
+## ***Text Emphasis***
+
+### *Italics*
+
+You can make a *phrase* _italicized_ two ways: by wrapping it in a single set of *(astericks) or _ (underscores)
+
+### **Bold text**
+
+Similarly there are a couple of ways to make a **phrase** __bold__: by using two sets of ** (asterics) or __ (underscores)
+
+##  Numbered lists
+
+1. List item 1
+  
+2. List item 2
+  
+3. List item 3
+
+## Numbered lists with subpoints
+
+1. List item 1
+    - Subpoint 1
+2. List item 2
+    - Sub  - if you have a ridiculously long number of sublists
+            - See?
+                      point 2
+3. List item 3
+    - Subpoint 3
+    
+## Plain list
+    
+- List item 1
+  - Subpoint 1
+    - Subsubpoint 1
+      
+- List item 2
+  - Subpoint 2
+   - Subsupoint 2
+      
+- List item 3
+  - Subpoint 3
+    - Subsubpoint 3
+
+## Don't forget your spaces
+
+-This is what happens
+    -If you don't include a space after the dash
+  
+## Paragraphs
+
+Writing a paragraph is simple, you start anywhere and you just write the text which you want to read. 
+
+Once you are ready for a new paragraph all you have to do is leave a blank line between the last sentence of the previous paragraph and the first sentence of the new paragraph. Don't expect there to be the normal indents on each paragraph thought!
+
+## Paragraphs
+
+Writing a paragraph is simple, you start anywhere and you just write the text which you want to read. 
+
+Once you are ready for a new paragraph all you have to do is leave a blank line between the last sentence of the previous paragraph and the first sentence of the new paragraph. Don't expect there to be the normal indents on each paragraph thought!
+
+See?
+
+## Hyperlinks and Images
+
+- [The website for class](http://politicaldatascience.com/)
+  
+  
+![A computer with data](http://politicaldatascience.com/PDS/Datasets/photo1.jpg)
+
+## Code Chunks
+
+![  ](./Images/add_code.png)
+## How to add code
+
+To add code 'inline', use three ``` (back quote keys) [Don't confuse this with the apostrophe key]. After adding the three back quote keys, you will then include the language which you want to run in brackets {r}. There are various options you can use about whether you want the code to actually be displayed or evaluated. 
+ 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
+# You can set up default seting using r setup
+# Here by default we used `echo = TRUE` to tell all chunks to print out the source code
+# We also used eval = TRUE so that all the code is evaluated and the results displayed
+# Both of these options can be overriden in a particular chunk, though
+```
+
+```{r, eval=T, warning=F, fig.height=2.5, fig.width=2.5}
+# You can show the code and the output and shut off warnings
+a <- rnorm(100)
+plot(a) 
+```
+
+---
+
+```{r, eval=F,}
+b <- runif(50) 
+plot(b) 
+# You can choose to show the code but not evaluate it 
+```
+---
+You can chose to evaluate a code chunk but choose not to show the code
+
+```{r, echo=F, fig.height=2.5, fig.width=2.5}
+a <- rnorm(100)
+plot(a) 
+```

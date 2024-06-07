@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Markdown and Github Pages</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2020-01-01" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Markdown and Github Pages
+### <div class="line-block">Dominique Lockett<br />
+<em>Washington University in St. Louis</em><br />
+<em>Department of Politcal Science</em></div>
+### 2020
+
+---
+
+
+&lt;style type="text/css"&gt;
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 14px;
+}
+pre {
+  font-size: 4px;
+}
+&lt;/style&gt;
+
+
+## Orientation for today
+Last time
+
+  1. Practiced using API's to access data from online sources
+  
+  2. X
+  
+  3. Y
+
+  
+--
+
+This Time
+
+1. Using Markdown create web content
+
+2. Applying your knowledge of Markdown to make yourself a simple website
+
+--
+
+Next time
+
+1. Interactive visualizations
+    - Use R code to make dynamic web applications that users can interact with
+
+
+---
+
+## Introduction for today
+
+1. What is Markdown
+  - Markdown is a powerful yet relatively simple to that allows users to create web content
+  
+  - The language relies on a set of rules which allows you to manage headers, font, and lists with ease
+  
+  - Slack, Reddit and Skype all apply Markdown style rules which make formatting messages easy
+
+--
+
+2. Why should I use it?
+
+  - It is an easy-to-read and easy-to-write (and easy-to-learn) plain text format
+
+  - It is simple to convert to HTML without needing a broad knowledge of HTML features which allows you to make a web page without programming skills
+
+  - Variants such as R Markdown allow you to make complex documents (PDF's, word documents, Shiny apps) with ease
+
+---
+
+## Syntax
+  + There are a few features of Markdown which can cover your basic needs when presenting text in a variety of formats
+  
+  + These include:
+  
+    - Headers
+    
+    - Text emphasis
+    
+    - Lists
+    
+    - Paragraphs
+    
+    - Hyperlinks
+    
+    - Images
+    
+    - Code chunk
+    
+---
+## Headers
+
+### **Code**
+
+  - `# First level`
+  
+  - `## Second level`
+  
+  - `### Third level`
+  
+--
+
+### **Output**
+
+  - # First level 
+
+  - ## Second level
+
+  - ### Third level
+
+
+---
+
+## ***Text Emphasis***
+
+### *Italics*
+  - **Code**: `You can make a *phrase* _italicized_ two ways: by wrapping it in a single set of * (astericks) or _ (underscores)`
+
+--
+
+  - **Output**: You can make a *phrase* _italicized_ two ways: by wrapping it in a single set of *(astericks) or _ (underscores)
+
+### **Bold text**
+  - **Code**: `Similarly there are a couple of ways to make a **phrase** __bold__: by using two sets of ** (asterics) or __ (underscores)`
+
+--
+
+  - **Output**: Similarly there are a couple of ways to make a **phrase** __bold__: by using two sets of ** (asterics) or __ (underscores)
+  
+---
+
+
+##  Numbered lists
+
+### **Code**
+
+  - `1. List item 1`
+  
+  - `2. List item 2`
+  
+  - `3. List item 4`
+  
+--
+
+### **Output**
+
+   1. List item 1
+  
+   2. List item 2
+  
+   3. List item 3
+
+---
+
+## Numbered lists with subpoints
+
+### **Code**
+
+`1. (Space)List item 1`
+
+      `(double tab) - (Space)Subpoint 1`
+      
+`2. (Space)List item 2`
+
+      `(double tab) - (Space)Subpoint 2`
+      
+`3. (Space)List item 3`
+
+      `(double tab) - (Space)Subpoint 3`
+  
+---
+
+## Numbered lists with subpoints
+
+### **Output**
+
+1. List item 1
+      - Subpoint 1
+      
+2. List item 2
+      - Subpoint 2
+      
+3. List item 3
+      - Subpoint 3
+
+---
+
+## Plain list
+
+### Code
+
+  `- (Space)List item 1`
+  
+    `(single tab) Subpoint 1 `
+    
+      `(double tab) Subsubpoint 1`
+  
+  `-  (Space)List item 2`
+  
+    `(single tab) Subpoint 2`
+    
+      `(double tab) Subsubpoint 2`
+  
+  `-  (Space)List item 3`
+  
+    `(single tab) Subpoint 3`
+    
+      `(double tab) Subsubpoint 3`
+---
+
+## Plain list
+
+  - List item 1
+  
+    - Subpoint 1
+      
+      - Subsubpoint 1
+      
+  - List item 2
+  
+    - Subpoint 2
+      
+      - Subsupoint 2
+      
+  - List item 3
+  
+    - Subpoint 3
+    
+      - Subsubpoint 3
+                  
+                  
+---
+
+## Don't forget your spaces
+
+### **Code**
+     `-This is what happens` 
+       `-without a space after the dash`
+
+      
+### **Output**
+
+  -This is what happens
+    -If you don't include a space after the dash
+
+  
+---
+
+## Paragraphs
+
+Writing a paragraph is simple, you start anywhere and you just write the text which you want to read. 
+
+Once you are ready for a new paragraph all you have to do is leave a blank line between the last sentence of the previous paragraph and the first sentence of the new paragraph. Don't expect there to be the normal indents on each paragraph thought!
+
+See?
+
+---
+    
+## Hyperlinks and Images
+    
+  - Images and hyperlinks are both similar and easy. The only difference is, in images, you must put an exclamation point before the brackets.
+  
+### Code
+
+  - `[The website for class](politicaldatascience.com)`
+  - `![A computer with data](http://politicaldatascience.com/PDS/Datasets/photo1.jpg)`
+  
+---
+
+## Hyperlinks and Images
+
+### Output
+
+  - [The website for class](http://politicaldatascience.com/)
+  
+  
+   ![A computer with data](http://politicaldatascience.com/PDS/Datasets/photo1.jpg)
+---
+
+## Adding code to a document
+
+### Code
+
+To add code 'inline', you three ``` (back quote keys) Don't confuse this with the apostrophe key. After adding the three back quote keys, you will then include the language which you want to run in brackets {r}. There are various options you can use about whether you want the code to actually be displayed or evaluated. 
+ 
+
+![map](./Images/add_code.png)
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

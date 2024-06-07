@@ -1,0 +1,314 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Markdown and Github Pages},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\newif\ifbibliography
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Markdown and Github Pages}
+\author{Dominique Lockett\\
+\emph{Washington University in St.~Louis}\\
+\emph{Department of Politcal Science}}
+\date{2020}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+
+\end{frame}
+
+\begin{frame}{Orientation for today}
+\protect\hypertarget{orientation-for-today}{}
+
+Last time
+
+\begin{enumerate}
+\item
+  Practiced using API's to access data from online sources
+\item
+  X
+\item
+  Y
+\end{enumerate}
+
+--
+
+This Time
+
+\begin{enumerate}
+\item
+  Using Markdown create web content
+\item
+  Applying your knowledge of Markdown to make yourself a simple website
+\end{enumerate}
+
+--
+
+Next time
+
+\begin{enumerate}
+\tightlist
+\item
+  Interactive visualizations
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Use R code to make dynamic web applications that users can interact
+    with
+  \end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Introduction for today}
+\protect\hypertarget{introduction-for-today}{}
+
+\begin{enumerate}
+\tightlist
+\item
+  What is Markdown
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Markdown is a powerful yet relatively simple to that allows users to
+  create web content
+\item
+  The language relies on a set of rules which allows you to manage
+  headers, font, and lists with ease
+\item
+  Slack, Reddit and Skype all apply Markdown style rules which make
+  formatting messages easy
+\end{itemize}
+
+--
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Why should I use it?
+\end{enumerate}
+
+\begin{itemize}
+\item
+  It is an easy-to-read and easy-to-write (and easy-to-learn) plain text
+  format
+\item
+  It is simple to convert to HTML without needing a broad knowledge of
+  HTML features which allows you to make a web page without programming
+  skills
+\item
+  Variants such as R Markdown allow you to make complex documents
+  (PDF's, word documents, Shiny apps) with ease
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Syntax}
+\protect\hypertarget{syntax}{}
+
+\begin{itemize}
+\item
+  There are a few features of Markdown which can cover your basic needs
+  when presenting text in a variety of formats
+\item
+  These include:
+
+  \begin{itemize}
+  \item
+    Text emphasis
+  \item
+    Headers
+  \item
+    Lists
+  \item
+    Paragraphs
+  \item
+    Hyperlinks
+  \item
+    Images
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Text Emphasis}
+\protect\hypertarget{text-emphasis}{}
+
+\begin{block}{\emph{Italics}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Code}:
+  \texttt{You\ can\ make\ a\ *phrase*\ \_italicized\_\ two\ ways:\ by\ wrapping\ it\ in\ a\ single\ set\ of\ *\ (astericks)\ or\ \_\ (underscores)}
+\end{itemize}
+
+--
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Output}: You can make a \emph{phrase} \emph{italicized} two
+  ways: by wrapping it in a single set of *(astericks) or \_
+  (underscores)
+\end{itemize}
+
+\end{block}
+
+\begin{block}{\textbf{Bold text}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Code}:
+  \texttt{Similarly\ there\ are\ a\ couple\ of\ ways\ to\ make\ a\ **phrase**\ \_\_bold\_\_:\ by\ using\ two\ sets\ of\ **\ (asterics)\ or\ \_\_\ (underscores)}
+\end{itemize}
+
+--
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Output}: Similarly there are a couple of ways to make a
+  \textbf{phrase} \textbf{bold}: by using two sets of ** (asterics) or
+  \_\_ (underscores)
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\begin{columns}[T]
+\begin{block}{Headers}
+
+\begin{column}{0.48\textwidth}
+\begin{block}{Code}
+
+\begin{itemize}
+\item
+  \texttt{\#\ First\ level}
+\item
+  \texttt{\#\#\ Second\ level}
+\item
+  \texttt{\#\#\#\ Third\ level}
+\end{itemize}
+
+--
+
+\end{block}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+\begin{block}{Output}
+
+\end{block}
+
+\begin{block}{First level}
+
+\begin{block}{Second level}
+
+\begin{block}{Third level}
+
+\end{block}
+
+\end{block}
+
+\end{block}
+\end{column}
+
+\end{block}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+\end{document}
