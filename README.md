@@ -5,12 +5,14 @@
 
 The aim of the Political Data Science Course is to equip students with the foundational skills and knowledge needed to perform data analysis, particularly within the context of political science. This course, designed for WashU's political science department, focuses on practical applications of data science principles to real-world datasets.
 
+ ![Problem Set 2](https://github.com/domlockett/data_science_course/blob/main/ps2.png)
+ 
 - **Real-World Data Application:** Activities involve working with actual datasets, allowing students to gain hands-on experience with real data analysis challenges.
 - **Step-by-Step Tutorials:** Detailed instructions guide students through complex processes, ensuring clarity and comprehension.
 - **Interactive Components:** Exercises incorporate interactive elements, such as coding and visualization tasks, to reinforce learning.
 - **Comprehensive Coverage:** Topics range from basic data manipulation to advanced statistical modeling, providing a well-rounded educational experience.
 
-For a look at our learning objectives, visit the [Problem Set 1 PDF](https://github.com/domlockett/data_science_course/blob/main/Problem%20Sets/PS%201/2018_ps1.pdf).
+For more details, look to the [Problem Set 2 Key]([https://github.com/domlockett/data_science_course/blob/main/Problem%20Sets/PS%201/2018_ps1.pdf](https://github.com/domlockett/data_science_course/blob/main/Problem%20Sets/PS%202/PS2_Key.pdf)).
 
 ## Detailed Description: Markdown and GitHub Pages Class
 
