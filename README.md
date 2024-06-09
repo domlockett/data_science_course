@@ -10,6 +10,8 @@ The aim of the Political Data Science Course is to equip students with the found
 - **Interactive Components:** Exercises incorporate interactive elements, such as coding and visualization tasks, to reinforce learning.
 - **Comprehensive Coverage:** Topics range from basic data manipulation to advanced statistical modeling, providing a well-rounded educational experience.
 
+For a look at our learning objectives, visit the [Problem Set 1 PDF](https://github.com/domlockett/data_science_course/blob/main/Problem%20Sets/PS%201/2018_ps1.pdf).
+
 ## Detailed Description: Markdown and GitHub Pages Class
 
 **Lecture Content:**
